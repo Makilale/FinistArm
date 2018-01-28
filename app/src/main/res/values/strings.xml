@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">FinistArm</string>
+    <string name="app_name">Finist</string>
+    <string name="finist">FINIST</string>
+    <string name="login_button">Вход</string>
+    <string name="login_login">Логин</string>
+    <string name="login_pass">Пароль</string>
+    <string name="panel">Административая панель</string>
+    <string name="login_autoriz">Авторизация</string>
 </resources>
