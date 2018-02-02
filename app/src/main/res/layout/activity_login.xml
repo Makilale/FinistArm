@@ -69,6 +69,7 @@
             android:background="@drawable/login_button"
             android:fontFamily="@font/robotoregular"
             android:gravity="center"
+            android:onClick="onClick"
             android:text="@string/login_button"
             android:textAllCaps="false"
             android:textColor="#fff"

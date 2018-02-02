@@ -6,4 +6,6 @@
     <string name="login_pass">Пароль</string>
     <string name="panel">Административая панель</string>
     <string name="login_autoriz">Авторизация</string>
+    <string name="menu_close_day">Закрыть день</string>
+    <string name="menu_open_day">Открыть день</string>
 </resources>
