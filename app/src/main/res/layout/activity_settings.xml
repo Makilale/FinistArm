@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.corp.a.i.finistarm.SettingsActivity">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/menuFinist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/intro"
+            android:text="@string/finist"
+            android:textColor="#000"
+            android:textSize="24sp"
+            tools:targetApi="jelly_bean" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/menuFinist"
+            android:layout_alignStart="@+id/menuFinist"
+            android:layout_below="@+id/menuFinist"
+            android:fontFamily="@font/robotolight"
+            android:text="@string/panel"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/add_hall"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/view5"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/view5"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/settings_halls_add"
+            style="@style/BtListStyle" />
+
+        <Button
+            android:id="@+id/settings_back"
+            android:layout_width="340dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="500dp"
+            android:background="@drawable/main_menu_btn_open_day"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_back"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:visibility="visible" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/textView2"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_rectangle"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/button_halls"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/view5"
+            android:layout_alignStart="@+id/view5"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/main_menu_button_settings"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_halls"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button_accounts"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_alignBaseline="@+id/button_halls"
+            android:layout_alignBottom="@+id/button_halls"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/button_halls"
+            android:layout_toRightOf="@+id/button_halls"
+            android:background="@drawable/main_menu_button_settings"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_acounts"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_alignBaseline="@+id/button4"
+            android:layout_alignBottom="@+id/button4"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/button4"
+            android:layout_toRightOf="@+id/button4"
+            android:background="@drawable/main_menu_button_settings"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_categories_goods"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_alignBaseline="@+id/button_accounts"
+            android:layout_alignBottom="@+id/button_accounts"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/button_accounts"
+            android:layout_toRightOf="@+id/button_accounts"
+            android:background="@drawable/main_menu_button_settings"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_stock"
+            android:textAllCaps="false" />
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/button3"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_rectangle"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll2"
+            android:layout_width="384dp"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/view5"
+            android:layout_alignStart="@+id/view5"
+            android:layout_below="@+id/textView"
+            android:layout_alignBottom="@id/add_hall"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="12dp">
+
+            <TableLayout
+                android:id="@+id/BtList2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="0"
+                android:visibility="visible"></TableLayout>
+        </ScrollView>
+
+          <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/view5"
+            android:layout_alignStart="@+id/view5"
+            android:layout_below="@+id/view5"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#fff"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/settings_halls"
+            android:textSize="24sp"
+            android:textAllCaps="false"
+            android:textColor="#000"
+            android:visibility="invisible" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
