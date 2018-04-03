@@ -14,5 +14,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textFinist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/intro"
+            android:text="FINIST"
+            android:textColor="#000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textAdmPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            android:fontFamily="@font/robotolight"
+            android:text="Административная панель"
+            android:textColor="#000"
+            android:textSize="16sp"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
