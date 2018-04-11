@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/btn_delete"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:background="@drawable/main_menu_butten_control_settings"
+    android:clickable="true"
+    android:focusable="true"
+    android:fontFamily="@font/robotoregular"
+    android:textAllCaps="false"
+    android:textSize="18sp" />

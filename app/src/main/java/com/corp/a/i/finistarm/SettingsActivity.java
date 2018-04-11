@@ -1,13 +1,14 @@
 package com.corp.a.i.finistarm;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -20,10 +21,88 @@ public class SettingsActivity extends AppCompatActivity {
     Button button_settings_back;
     Button button_halls, button_accounts;
     Button add_hall;
+    Button btnNew, btnNewDelete;
     TextView TW;
     public Button btDeletePrev = null;
+    public Button btAccPrev = null;
     TableLayout BtList2;
+    RelativeLayout VP;
     public int i=1, m=0;
+
+    public  Button add_btn(int j, View view, int width)
+    {
+        Button btn = new Button(BtList2.getContext());
+        btn.setBackgroundDrawable( view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
+        btn.setLayoutParams(new TableRow.LayoutParams(width, width));
+        btn.setTextSize(18);
+        btn.setText("");
+        btn.setId(j);
+        return  btn;
+    }
+
+    public  TableRow add_Trow(Button i, Button j, int id)
+    {
+        TableRow tableRow = new TableRow(BtList2.getContext());
+        tableRow.addView(i);
+        tableRow.addView(j);
+        tableRow.setId(id*100);
+        return  tableRow;
+    }
+
+    public void add_clickListener_halls ()
+    {
+        if (i>1) {
+            btDeletePrev = (Button)findViewById(i * 10);
+            //int m = btDeletePrev.getId();
+            btDeletePrev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    btDeletePrev.setVisibility(Button.GONE);
+                    int m = BtList2.getChildCount();
+                    BtList2.removeViews(m-1, 1);
+                    if (i-- > 2) {
+                        btDeletePrev = (Button)findViewById(i * 10);
+                        btDeletePrev.setVisibility(Button.VISIBLE);
+                    }
+                }
+            });
+        }
+    }
+
+    public void add_two_btn(View view, int i)
+    {
+        btnNew = add_btn(i, view, LayoutParams.WRAP_CONTENT);
+        btnNewDelete = add_btn(i*10, view, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+        BtList2.addView(add_Trow(btnNew, btnNewDelete, i));
+    }
+
+    public void onClick_AddAccuant(View view) {
+        VP.setVisibility(View.VISIBLE);
+    }
+
+    public void onClick_CancelAccuant(View view) {
+        VP.setVisibility(View.GONE);
+    }
+
+    public void onClick_SaveAccuant(View view) {
+        VP.setVisibility(View.GONE);
+        add_two_btn(view, ++i);
+        btnNew.setText((((TextView)findViewById(R.id.etLogin)).getText()));
+        //add_clickListener_halls();
+        btDeletePrev = (Button)findViewById(i * 10);
+        btDeletePrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //определям id строки, которую будем удалть
+                int m = view.getId();
+                m = m*10;
+                //находим эту строку
+                TableRow row = (TableRow)findViewById(m);
+                //удаляем эту строку
+                BtList2.removeView(row);
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +117,8 @@ public class SettingsActivity extends AppCompatActivity {
         TW.setVisibility(TextView.GONE);
         BtList2 = (TableLayout)findViewById(R.id.BtList2);
         BtList2.setVisibility(TableLayout.GONE);
+        VP = (RelativeLayout)findViewById(R.id.VP);
+        VP.setVisibility(ViewPager.GONE);
 
         button_settings_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +127,7 @@ public class SettingsActivity extends AppCompatActivity {
                 add_hall.setVisibility(Button.GONE);
                 BtList2.setVisibility(TableLayout.GONE);
                 TW.setVisibility(TextView.GONE);
+                //VP.setVisibility(ViewPager.GONE);
                 startActivity(intent);
             }
         });
@@ -63,75 +145,22 @@ public class SettingsActivity extends AppCompatActivity {
                 TW.setText(view.getContext().getResources().getText(R.string.settings_halls));
                 TW.setVisibility(TextView.VISIBLE);
                 {
-                    Button btnNew = new Button(BtList2.getContext());
-                    btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
-                    btnNew.setTextSize(18);
-                    btnNew.setText("Зал №1");
-                    btnNew.setId((int)1);
-                    Button btnNewDelete = new Button(BtList2.getContext());
-                    btnNewDelete.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_delete_settings));
-                    btnNewDelete.setTextSize(18);
-                    btnNewDelete.setText("");
-                    btnNewDelete.setId(i*10);
-                    int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 49, getResources().getDisplayMetrics());
-                    btnNewDelete.setLayoutParams(new TableRow.LayoutParams(width, width));
-                    TableRow tableRow1 = new TableRow(BtList2.getContext());
-                    tableRow1.addView(btnNew);
+                    add_two_btn(view, i);
+                    btnNew.setText("Зал №" + i);
                     btnNewDelete.setVisibility(Button.INVISIBLE);
-                    tableRow1.addView(btnNewDelete);
-                    BtList2.addView(tableRow1);
                 }
-
 
                 add_hall.setOnClickListener(new View.OnClickListener()
                 {
-
                     @Override
                     public void onClick(View view) {
-                        BtList2.setVisibility(TableLayout.VISIBLE);
-                        add_hall.setVisibility(Button.VISIBLE);
                         if (i>1) {
                             btDeletePrev = (Button)findViewById(i * 10);
                             btDeletePrev.setVisibility(Button.INVISIBLE);
                         }
-
-                        Button btnNew = new Button(BtList2.getContext());
-                        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
-                        btnNew.setTextSize(18);
-                        btnNew.setText("Зал №" + ++i);
-                        btnNew.setId(i);
-
-                        Button btnNewDelete = new Button(BtList2.getContext());
-                        btnNewDelete.setTextSize(18);
-                        btnNewDelete.setText("");
-                        btnNewDelete.setGravity(Gravity.CENTER);
-                        btnNewDelete.setId(i*10);
-                        btnNewDelete.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_delete_settings));
-                        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 49, getResources().getDisplayMetrics());
-                        btnNewDelete.setLayoutParams(new TableRow.LayoutParams(width, width));
-                        TableRow tableRow1 = new TableRow(BtList2.getContext());
-                        tableRow1.addView(btnNew);
-                        tableRow1.addView(btnNewDelete);
-                        BtList2.addView(tableRow1);
-
-                        if (i>1) {
-                            btDeletePrev = (Button)findViewById(i * 10);
-                            int m = btDeletePrev.getId();
-                            btDeletePrev.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    btDeletePrev.setVisibility(Button.GONE);
-                                    btDeletePrev.setVisibility(Button.GONE);
-                                    int m = BtList2.getChildCount();
-                                    BtList2.removeViews(m-1, 1);
-                                    if (i-- > 2) {
-                                        btDeletePrev = (Button) findViewById(i * 10);
-                                        btDeletePrev.setVisibility(Button.VISIBLE);
-                                    }
-                                }
-                            });
-                        }
+                        add_two_btn(view, ++i);
+                        btnNew.setText("Зал №" + i);
+                        add_clickListener_halls();
                     }
                 });
                 }
@@ -142,6 +171,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 BtList2.setVisibility(TableLayout.VISIBLE);
+                add_hall.setVisibility(Button.VISIBLE);
                 int m = BtList2.getChildCount();
                 //очищаем таблицу
                 if(m>0) {
@@ -153,78 +183,40 @@ public class SettingsActivity extends AppCompatActivity {
                 TW.setText(view.getContext().getResources().getText(R.string.settings_acounts));
                 TW.setVisibility(TextView.VISIBLE);
                 {
-                    Button btnNew = new Button(BtList2.getContext());
-                    btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
-                    btnNew.setTextSize(18);
-                    btnNew.setText("Аккуант №1");
-                    btnNew.setId((int)1);
-                    Button btnNewDelete = new Button(BtList2.getContext());
-                    btnNewDelete.setTextSize(18);
-                    btnNewDelete.setText("");//
-                    btnNewDelete.setId(i*10);//задали id кнопки удаления
-                    int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-                    btnNewDelete.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_delete_settings));
-                    btnNewDelete.setLayoutParams(new TableRow.LayoutParams(width, width));//сделаи кнопку удаления учётки квадратной
-                    TableRow tableRow1 = new TableRow(BtList2.getContext());
-                    tableRow1.addView(btnNew);//добавили кнопку учётки
-                    tableRow1.addView(btnNewDelete);//добавили кнопку удаления учётки
-                    tableRow1.setId(i*10+i);//определили id  строки
-                    BtList2.addView(tableRow1);//добавили строку с кнопками в таблицу
-                    if (i>=1) {
-                        btDeletePrev = (Button)findViewById(i * 10);
-                        btDeletePrev.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //определям id строки, которую будем удалть
-                                int m = view.getId();
-                                m = m/10+m;
-                                //находим эту строку
-                                TableRow row = (TableRow)findViewById(m);
-                                //удаляем эту строку
-                                BtList2.removeView(row);
-                            }
-                        });
-                    }
+                    add_two_btn(view, i);
+                    btnNew.setText("Аккуант №" + i);
+                    btnNewDelete.setVisibility(Button.INVISIBLE);
                 }
 
-                add_hall.setOnClickListener(new View.OnClickListener()
+               /* add_hall.setOnClickListener(new View.OnClickListener()
                 {
-
                     @Override
                     public void onClick(View view) {
                         BtList2.setVisibility(TableLayout.VISIBLE);
                         add_hall.setVisibility(Button.VISIBLE);
                         if (i>=1) {
+                            btAccPrev = (Button)findViewById(i);
                             btDeletePrev = (Button)findViewById(i * 10);
                         }
 
-                        Button btnNew = new Button(BtList2.getContext());
-                        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
-                        btnNew.setTextSize(18);
-                        btnNew.setText("Аккуант №" + ++i);
-                        btnNew.setId(i);
-
-                        Button btnNewDelete = new Button(BtList2.getContext());
-                        btnNewDelete.setTextSize(18);
-                        btnNewDelete.setText("");
-                        btnNewDelete.setId(i*10);
-                        btnNewDelete.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_delete_settings));
-                        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 49, getResources().getDisplayMetrics());
-                        btnNewDelete.setLayoutParams(new TableRow.LayoutParams(width, width));
-                        TableRow tableRow1 = new TableRow(BtList2.getContext());
-                        tableRow1.addView(btnNew);
-                        tableRow1.addView(btnNewDelete);
-                        tableRow1.setId(i*10+i);
-                        BtList2.addView(tableRow1);
-
-                        if (i>=1) {
+                        add_two_btn(view, ++i);
+                        btnNew.setText("Аккуант №" + i);
+                        if (i>=1)
+                        {
+                            btAccPrev = (Button)findViewById(i);
+                            btAccPrev.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    VP.setVisibility(View.VISIBLE);
+                                }
+                            });
                             btDeletePrev = (Button)findViewById(i * 10);
                             btDeletePrev.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     //определям id строки, которую будем удалть
                                     int m = view.getId();
-                                    m = m/10+m;
+                                    m = m*10;
                                     //находим эту строку
                                     TableRow row = (TableRow)findViewById(m);
                                     //удаляем эту строку
@@ -233,7 +225,7 @@ public class SettingsActivity extends AppCompatActivity {
                             });
                         }
                     }
-                });
+                });*/
             }
 
         });

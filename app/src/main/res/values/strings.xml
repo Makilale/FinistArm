@@ -12,6 +12,7 @@
     <string name="menu_report">Сформировать отчёт</string>
     <string name="settings_back">Вернуться на главный экран</string>
     <string name="settings_halls">Залы</string>
+    <string name="settings_acc_value">Введите значения</string>
     <string name="settings_halls_add">Добавить зал</string>
     <string name="settings_acounts">Аккаунты</string>
     <string name="settings_acounts_add">Добавить аккаунт</string>
