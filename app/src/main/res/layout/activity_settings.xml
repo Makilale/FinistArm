@@ -56,9 +56,21 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="102dp"
             android:layout_marginTop="40dp"
-            android:onClick="onClick_AddAccuant"
             android:text="@string/settings_halls_add" />
-
+        <Button
+            android:id="@+id/add_account"
+            style="@style/BtListStyle"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/view2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/view2"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="40dp"
+            android:onClick="onClick_AddAccuant"
+            android:text="@string/settings_acounts_add" />
         <Button
             android:id="@+id/settings_back"
             android:layout_width="340dp"
@@ -99,6 +111,7 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/main_menu_button_settings"
             android:fontFamily="@font/robotoregular"
+            android:onClick="onClick_Halls"
             android:text="@string/settings_halls"
             android:textAllCaps="false" />
 
@@ -114,26 +127,28 @@
             android:layout_toRightOf="@+id/button_halls"
             android:background="@drawable/main_menu_button_settings"
             android:fontFamily="@font/robotoregular"
+            android:onClick="onClick_Accounts"
             android:text="@string/settings_acounts"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_categories"
             android:layout_width="190dp"
             android:layout_height="50dp"
-            android:layout_alignBaseline="@+id/button4"
-            android:layout_alignBottom="@+id/button4"
+            android:layout_alignBaseline="@+id/button_stock"
+            android:layout_alignBottom="@+id/button_stock"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/button4"
-            android:layout_toRightOf="@+id/button4"
+            android:layout_toEndOf="@+id/button_stock"
+            android:layout_toRightOf="@+id/button_stock"
             android:background="@drawable/main_menu_button_settings"
             android:fontFamily="@font/robotoregular"
+            android:onClick="onClick_Categories"
             android:text="@string/settings_categories_goods"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_stock"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_alignBaseline="@+id/button_accounts"
@@ -144,6 +159,7 @@
             android:layout_toRightOf="@+id/button_accounts"
             android:background="@drawable/main_menu_button_settings"
             android:fontFamily="@font/robotoregular"
+            android:onClick="onClick_Stock"
             android:text="@string/settings_stock"
             android:textAllCaps="false" />
 
@@ -151,7 +167,7 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@+id/button3"
+            android:layout_below="@+id/button_categories"
             android:layout_marginEnd="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -203,9 +219,9 @@
             android:background="@drawable/main_menu_butten_control_settings"
             android:layout_alignBottom="@+id/scroll"
             android:layout_alignEnd="@+id/settings_back"
-            android:layout_alignLeft="@+id/button3"
+            android:layout_alignLeft="@+id/button_categories"
             android:layout_alignRight="@+id/settings_back"
-            android:layout_alignStart="@+id/button3"
+            android:layout_alignStart="@+id/button_categories"
             android:layout_alignTop="@+id/scroll"
             android:layout_marginLeft="100dp"
             android:visibility="visible">
