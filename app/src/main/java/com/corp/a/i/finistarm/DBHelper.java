@@ -46,8 +46,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `Value` VALUES (\"Мл.\",\"1\")");
         db.execSQL("INSERT INTO `Value` VALUES (\"Шт.\", \"1\")");
         db.execSQL("INSERT INTO `Halls` VALUES (\"Зал №1\", \"1\")");
-
-
     }
 
     @Override

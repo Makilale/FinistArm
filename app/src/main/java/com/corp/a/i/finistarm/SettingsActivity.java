@@ -1,6 +1,9 @@
 package com.corp.a.i.finistarm;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +15,17 @@ import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.util.TypedValue;
 import android.widget.TextView;
+import java.lang.String;
+
+import static java.sql.Types.NULL;
 
 /**
  * Created by GordeevMaxim on 22.03.2018.
  */
 
 public class SettingsActivity extends AppCompatActivity {
+    DBHelper dbHelper;
+    SQLiteDatabase db;
     Button button_settings_back;
     Button button_halls, button_accounts;
     Button add_hall, add_account;
@@ -27,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
     public Button btAccPrev = null;
     TableLayout BtList2;
     RelativeLayout VP;
-    public int i = 1, m = 0;
+    public int i = 0, m = 0;
 
     public Button add_btn(int j, View view, int width) {
         Button btn = new Button(BtList2.getContext());
@@ -57,6 +65,10 @@ public class SettingsActivity extends AppCompatActivity {
                     btDeletePrev.setVisibility(Button.GONE);
                     int m = BtList2.getChildCount();
                     BtList2.removeViews(m - 1, 1);
+                    //удлить из бд
+                    db = dbHelper.getWritableDatabase();
+                    db.delete("Halls","isActual = " + i, null);
+                    db.close();
                     if (i-- > 2) {
                         btDeletePrev = (Button) findViewById(i * 10);
                         btDeletePrev.setVisibility(Button.VISIBLE);
@@ -65,10 +77,34 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
     }
+    public void add_clickListener_accuants() {
+        if (i > 1) {
+            btDeletePrev = (Button) findViewById(i * 10);
+            //int m = btDeletePrev.getId();
+            btDeletePrev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //определям id строки, которую будем удалть
+                    int m = view.getId();
+                    m = m*10;
+                    //находим эту строку
+                    TableRow row = (TableRow)findViewById(m);
+                    //m = (int)btDeletePrev.getTag();
+                    //удаляем эту строку
+                    BtList2.removeView(row);
+                    //удлить из бд
+                    /*db = dbHelper.getWritableDatabase();
+                    db.delete("Login","isActual = " + m, null);
+                    db.close();*/
+                }
+            });
+        }
+    }
 
-    public void add_two_btn(View view, int i) {
+    public void add_two_btn(View view, int i, int tag) {
         btnNew = add_btn(i, view, LayoutParams.WRAP_CONTENT);
         btnNewDelete = add_btn(i * 10, view, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+        btnNewDelete.setTag(tag);
         BtList2.addView(add_Trow(btnNew, btnNewDelete, i));
     }
 
@@ -82,10 +118,18 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onClick_SaveAccuant(View view) {
         VP.setVisibility(View.GONE);
-        add_two_btn(view, ++i);
-        btnNew.setText((((TextView) findViewById(R.id.etLogin)).getText()));
-        //add_clickListener_halls();
-        btDeletePrev = (Button) findViewById(i * 10);
+        add_two_btn(view, ++i, i);
+        String lg = (((TextView) findViewById(R.id.etLogin)).getText().toString());
+        btnNew.setText(lg);
+        add_clickListener_accuants();
+        //вставка в бд
+        /*db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("isActual", i);
+        cv.put("login", lg);
+        db.insert("Login",  null, cv);
+        db.close();*/
+        /*btDeletePrev = (Button) findViewById(i * 10);
         btDeletePrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,9 +141,26 @@ public class SettingsActivity extends AppCompatActivity {
                 //удаляем эту строку
                 BtList2.removeView(row);
             }
-        });
+        });*/
     }
 
+    public void initialization_Halls(View view)
+    {
+        dbHelper = new DBHelper(this);
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
+        String [] columns = new String[] { "isActual", "name" };
+        Cursor c = db.query("Halls", columns, null, null, null, null, null );
+        c.moveToFirst();
+        do {
+            String NameCol = c.getString(c.getColumnIndex("name"));
+            add_two_btn(view, ++i, i);
+            btnNew.setText(NameCol);
+            add_clickListener_halls();
+            if (i!=c.getCount() || i == 1) btnNewDelete.setVisibility(Button.INVISIBLE);
+        } while (c.moveToNext());
+        dbHelper.close();
+    }
     public void onClick_Halls(View view) {
         btnNew = (Button) findViewById(R.id.button_halls);
         btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
@@ -113,7 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
         int m = BtList2.getChildCount();
         if (m > 0) {
             BtList2.removeViews(0, m);
-            i = 1;
+            i = 0;
         }
         add_account.setVisibility(Button.GONE);
         add_hall.setVisibility(Button.VISIBLE);
@@ -124,18 +185,39 @@ public class SettingsActivity extends AppCompatActivity {
                     btDeletePrev = (Button) findViewById(i * 10);
                     btDeletePrev.setVisibility(Button.INVISIBLE);
                 }
-                add_two_btn(view, ++i);
+                add_two_btn(view, ++i, i);
                 btnNew.setText("Зал №" + i);
                 add_clickListener_halls();
+                //вставка в бд
+                db = dbHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("isActual", i);
+                cv.put("name", "Зал №" + i);
+                db.insert("Halls",  null, cv);
+                db.close();
             }
         });
         TW.setText(view.getContext().getResources().getText(R.string.settings_halls));
         TW.setVisibility(TextView.VISIBLE);
-        {
-            add_two_btn(view, i);
-            btnNew.setText("Зал №" + i);
-            btnNewDelete.setVisibility(Button.INVISIBLE);
-        }
+        initialization_Halls(view);
+    }
+
+    public void initialization_Accounts(View view)
+    {
+        dbHelper = new DBHelper(this);
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
+        String [] columns = new String[] { "isActual", "login" };
+        Cursor c = db.query("Login", columns, null, null, null, null, null );
+        c.moveToFirst();
+        do {
+            String NameCol = c.getString(c.getColumnIndex("login"));
+            add_two_btn(view, ++i, c.getInt(c.getColumnIndex("isActual")));
+            btnNew.setText(NameCol);
+            add_clickListener_accuants();
+            if (i!=c.getCount() || i == 1) btnNewDelete.setVisibility(Button.INVISIBLE);
+        } while (c.moveToNext());
+        dbHelper.close();
     }
 
     public void onClick_Accounts(View view) {
@@ -156,6 +238,7 @@ public class SettingsActivity extends AppCompatActivity {
             BtList2.removeViews(0, m);
             i = 1;
         }
+        initialization_Accounts(view);
         /*add_hall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,28 +258,16 @@ public class SettingsActivity extends AppCompatActivity {
                             VP.setVisibility(View.VISIBLE);
                         }
                     });
-                    btDeletePrev = (Button)findViewById(i * 10);
-                    btDeletePrev.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //определям id строки, которую будем удалть
-                            int m = view.getId();
-                            m = m*10;
-                            //находим эту строку
-                            TableRow row = (TableRow)findViewById(m);
-                            //удаляем эту строку
-                            BtList2.removeView(row);
-                        }
-                    });
+
                 }
             }
         });*/
         TW.setText(view.getContext().getResources().getText(R.string.settings_acounts));
         TW.setVisibility(TextView.VISIBLE);
         {
-            add_two_btn(view, i);
+            /*add_two_btn(view, i);
             btnNew.setText("Аккуант №" + i);
-            btnNewDelete.setVisibility(Button.INVISIBLE);
+            btnNewDelete.setVisibility(Button.INVISIBLE);*/
         }
     }
     public void onClick_Stock(View view) {
