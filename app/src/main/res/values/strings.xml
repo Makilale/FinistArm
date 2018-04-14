@@ -4,6 +4,8 @@
     <string name="login_button">Вход</string>
     <string name="login_login">Логин</string>
     <string name="login_pass">Пароль</string>
+    <string name="login_name">Имя</string>
+    <string name="login_level">Уровень доступа</string>
     <string name="panel">Административая панель</string>
     <string name="login_autoriz">Авторизация</string>
     <string name="menu_close_day">Закрыть день</string>
