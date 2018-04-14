@@ -8,14 +8,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.util.TypedValue;
 import android.widget.TextView;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.sql.Types.NULL;
 
@@ -27,17 +32,27 @@ public class SettingsActivity extends AppCompatActivity {
     DBHelper dbHelper;
     SQLiteDatabase db;
     Button button_settings_back;
-    Button button_halls, button_accounts;
+    Button button_halls, button_accounts, button_stock, button_categories;
     Button add_hall, add_account;
     Button btnNew, btnNewDelete;
     TextView TW;
     //String lg = "", ps = "", nm = "";
     public Button btDeletePrev = null;
     public Button btAccPrev = null;
-    TableLayout BtList2;
+    public ScrollView SC;
+    public TableLayout BtList2;
     RelativeLayout VP;
+    GridView GV;
     public int i = 0, m = 0;
     public Boolean flag = true;
+
+    public void setTableLayout(TableRow tb)
+    {
+        SC.setVisibility(ScrollView.VISIBLE);
+        BtList2.setVisibility(TableLayout.VISIBLE);
+        GV.setVisibility(GridView.GONE);
+        this.BtList2.addView(tb);
+    }
 
     public Button add_btn(int j, View view, int width) {
         Button btn = new Button(BtList2.getContext());
@@ -205,15 +220,13 @@ public class SettingsActivity extends AppCompatActivity {
         dbHelper.close();
     }
     public void onClick_Halls(View view) {
-        btnNew = (Button) findViewById(R.id.button_halls);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
-        btnNew = (Button) findViewById(R.id.button_accounts);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_stock);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_categories);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
+        button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        SC.setVisibility(ScrollView.VISIBLE);
         BtList2.setVisibility(TableLayout.VISIBLE);
+        GV.setVisibility(GridView.GONE);
         VP.setVisibility(View.GONE);
         int m = BtList2.getChildCount();
         if (m > 0) {
@@ -267,15 +280,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onClick_Accounts(View view) {
-        btnNew = (Button) findViewById(R.id.button_halls);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_accounts);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
-        btnNew = (Button) findViewById(R.id.button_stock);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_categories);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
+        button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        SC.setVisibility(ScrollView.VISIBLE);
         BtList2.setVisibility(TableLayout.VISIBLE);
+        GV.setVisibility(GridView.GONE);
         VP.setVisibility(View.GONE);
         add_hall.setVisibility(Button.GONE);
         add_account.setVisibility(Button.VISIBLE);
@@ -290,36 +301,59 @@ public class SettingsActivity extends AppCompatActivity {
         TW.setVisibility(TextView.VISIBLE);
     }
     public void onClick_Stock(View view) {
-        btnNew = (Button) findViewById(R.id.button_halls);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_accounts);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_stock);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
-        btnNew = (Button) findViewById(R.id.button_categories);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
+        button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
         BtList2.setVisibility(TableLayout.GONE);
         add_account.setVisibility(Button.GONE);
         add_hall.setVisibility(Button.GONE);
         VP.setVisibility(View.GONE);
-        TW.setText(view.getContext().getResources().getText(R.string.settings_halls));
+        TW.setText(view.getContext().getResources().getText(R.string.settings_stock_p1));
         TW.setVisibility(TextView.VISIBLE);
+        GV.setVisibility(GridView.VISIBLE);
+    }
+
+    public void initialization_Categories(View view)
+    {
+        final List<ButtonNameList> products = new ArrayList<ButtonNameList>();
+        dbHelper = new DBHelper(this);
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
+        String [] columns = new String[] { "isActual", "idParent", "name" };
+        Cursor c = db.query("Category", columns, null, null, null, null, null );
+        if(c.moveToFirst()) {
+            do {
+                int m = c.getCount();
+                //i = c.getInt(c.getColumnIndex("isActual"));
+                //String NameCat = c.getString(c.getColumnIndex("name"));
+                products.add(new ButtonNameList(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("isActual"))));
+            } while (c.moveToNext());
+        }
+        dbHelper.close();
+        ButtonArrayAdapter BTA = new ButtonArrayAdapter(view.getContext(), 10, products);
+        BTA.setSettingsActivity(this);
+        GV.setAdapter(BTA);
+        int m = BtList2.getChildCount();
+        if (m > 0) {
+            BtList2.removeViews(0, m);
+        }
+        //
     }
     public void onClick_Categories(View view) {
-        btnNew = (Button) findViewById(R.id.button_halls);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_accounts);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_stock);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        btnNew = (Button) findViewById(R.id.button_categories);
-        btnNew.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
+        button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
         BtList2.setVisibility(TableLayout.GONE);
         add_account.setVisibility(Button.GONE);
         add_hall.setVisibility(Button.GONE);
         VP.setVisibility(View.GONE);
-        TW.setText(view.getContext().getResources().getText(R.string.settings_halls));
+        TW.setText(view.getContext().getResources().getText(R.string.settings_categories_goods_p1));
         TW.setVisibility(TextView.VISIBLE);
+        GV.setVisibility(GridView.VISIBLE);
+        initialization_Categories(view);
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -327,6 +361,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         button_accounts = (Button) findViewById(R.id.button_accounts);
         button_halls = (Button) findViewById(R.id.button_halls);
+        button_stock = (Button) findViewById(R.id.button_stock);
+        button_categories = (Button) findViewById(R.id.button_categories);
         add_hall = (Button) findViewById(R.id.add_hall);
         add_account = (Button) findViewById(R.id.add_account);
         add_hall.setVisibility(Button.GONE);
@@ -336,10 +372,12 @@ public class SettingsActivity extends AppCompatActivity {
         TW = (TextView) findViewById(R.id.textView);
         TW.setVisibility(TextView.GONE);
         BtList2 = (TableLayout) findViewById(R.id.BtList2);
-        BtList2.setVisibility(TableLayout.GONE);
+        SC = (ScrollView) findViewById(R.id.scroll);
+        SC.setVisibility(ScrollView.GONE);
         VP = (RelativeLayout) findViewById(R.id.VP);
         VP.setVisibility(ViewPager.GONE);
-
+        GV = (GridView) findViewById(R.id.gv);
+        GV.setVisibility(GridView.GONE);
         button_settings_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -349,6 +387,11 @@ public class SettingsActivity extends AppCompatActivity {
                 BtList2.setVisibility(TableLayout.GONE);
                 TW.setVisibility(TextView.GONE);
                 VP.setVisibility(ViewPager.GONE);
+                GV.setVisibility(GridView.GONE);
+                button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+                button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+                button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
+                button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
                 startActivity(intent);
             }
         });

@@ -20,4 +20,8 @@
     <string name="settings_acounts_add">Добавить аккаунт</string>
     <string name="settings_categories_goods">Категории / Товары</string>
     <string name="settings_stock">Склад</string>
+    <string name="settings_stock_p1">Склад предприятия  |  Категории</string>
+    <string name="settings_stock_p2">Склад предприятия  |  Позиции</string>
+    <string name="settings_categories_goods_p1">Категории и товары  |  Категории</string>
+    <string name="settings_categories_goods_p2">Категории и товары  |  Товары</string>
 </resources>

@@ -9,12 +9,12 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:windowSoftInputMode="stateHidden"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:windowSoftInputMode="stateHidden"
         app:layout_constraintVertical_bias="0.0">
 
         <View
@@ -26,6 +26,7 @@
             android:visibility="invisible"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
+
         <TextView
             android:id="@+id/menuFinist"
             android:layout_width="wrap_content"
@@ -66,7 +67,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="145dp"
             android:layout_marginTop="40dp"
-            android:text="@string/settings_halls_add" />
+            android:text="@string/settings_halls_add"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/add_account"
             style="@style/BtListStyle"
@@ -80,7 +83,9 @@
             android:layout_marginStart="145dp"
             android:layout_marginTop="40dp"
             android:onClick="onClick_AddAccuant"
-            android:text="@string/settings_acounts_add" />
+            android:text="@string/settings_acounts_add"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/settings_back"
             android:layout_width="340dp"
@@ -193,13 +198,14 @@
             android:layout_height="match_parent"
             android:layout_alignBottom="@id/add_hall"
             android:layout_alignEnd="@+id/center"
-            android:layout_alignRight="@+id/center"
             android:layout_alignLeft="@+id/view2"
+            android:layout_alignRight="@+id/center"
             android:layout_alignStart="@+id/view2"
             android:layout_below="@+id/textView"
             android:layout_marginBottom="60dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
 
             <TableLayout
                 android:id="@+id/BtList2"
@@ -229,7 +235,6 @@
             android:id="@+id/VP"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/login_rectangle"
             android:layout_alignBottom="@+id/scroll"
             android:layout_alignEnd="@+id/settings_back"
             android:layout_alignLeft="@+id/center"
@@ -237,7 +242,8 @@
             android:layout_alignStart="@+id/center"
             android:layout_alignTop="@+id/scroll"
             android:layout_marginLeft="20dp"
-            android:visibility="visible"
+            android:background="@drawable/login_rectangle"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -253,22 +259,23 @@
                 android:ems="100"
                 android:fontFamily="@font/robotoregular"
                 android:hint="@string/login_login"
-                android:text=""
-                android:textSize="24sp"
                 android:inputType="textPersonName"
                 android:paddingBottom="1dp"
                 android:paddingEnd="1dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="1dp"
                 android:paddingStart="20dp"
+                android:text=""
                 android:textColor="#000"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8"
-                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintVertical_bias="0.500"
 
-                 />
+                />
+
             <EditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
@@ -280,22 +287,22 @@
                 android:layout_below="@+id/etPass"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/login_edit_text"
-                android:text=""
-                android:textSize="24sp"
+                android:ems="10"
                 android:hint="@string/login_name"
+                android:inputType="textPersonName"
                 android:paddingBottom="1dp"
                 android:paddingEnd="1dp"
-                android:ems="10"
                 android:paddingLeft="20dp"
                 android:paddingRight="1dp"
                 android:paddingStart="20dp"
+                android:text=""
                 android:textColor="#000"
-                android:inputType="textPersonName"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLogin"
-                app:layout_constraintHorizontal_bias="0.500"
-                app:layout_constraintVertical_bias="0.500"/>
+                app:layout_constraintVertical_bias="0.500" />
 
             <EditText
                 android:id="@+id/etPass"
@@ -308,22 +315,22 @@
                 android:layout_below="@+id/etLogin"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/login_edit_text"
-                android:text=""
-                android:textSize="24sp"
+                android:ems="10"
                 android:hint="@string/login_pass"
+                android:inputType="textPersonName"
                 android:paddingBottom="1dp"
                 android:paddingEnd="1dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="1dp"
                 android:paddingStart="20dp"
+                android:text=""
                 android:textColor="#000"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etName"
-                app:layout_constraintHorizontal_bias="0.500"
-                app:layout_constraintVertical_bias="0.500"/>
+                app:layout_constraintVertical_bias="0.500" />
 
             <EditText
                 android:id="@+id/etLevel"
@@ -336,22 +343,22 @@
                 android:layout_below="@+id/etName"
                 android:layout_marginTop="18dp"
                 android:background="@drawable/login_edit_text"
-                android:text=""
-                android:textSize="24sp"
+                android:ems="10"
                 android:hint="@string/login_level"
+                android:inputType="textPersonName"
                 android:paddingBottom="1dp"
                 android:paddingEnd="1dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="1dp"
                 android:paddingStart="20dp"
+                android:text=""
                 android:textColor="#000"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPass"
-                app:layout_constraintHorizontal_bias="0.500"
-                app:layout_constraintVertical_bias="0.500"/>
+                app:layout_constraintVertical_bias="0.500" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -382,7 +389,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
                 android:onClick="onClick_SaveAccuant"
-                android:text="Сохранить"/>
+                android:text="Сохранить" />
 
             <Button
                 android:id="@+id/btn_cancal"
@@ -396,8 +403,28 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginRight="40dp"
                 android:onClick="onClick_CancelAccuant"
-                android:text="Отмена"/>
+                android:text="Отмена" />
         </RelativeLayout>
 
+
+        <GridView
+            android:id="@+id/gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/view2"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignRight="@+id/view2"
+            android:layout_alignStart="@+id/textView"
+            android:layout_alignTop="@+id/scroll"
+            android:layout_below="@+id/textView"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="12dp"
+            android:columnWidth="200dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="20dp" />
     </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
