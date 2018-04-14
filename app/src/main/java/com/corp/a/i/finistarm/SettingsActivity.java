@@ -325,8 +325,6 @@ public class SettingsActivity extends AppCompatActivity {
         if(c.moveToFirst()) {
             do {
                 int m = c.getCount();
-                //i = c.getInt(c.getColumnIndex("isActual"));
-                //String NameCat = c.getString(c.getColumnIndex("name"));
                 products.add(new ButtonNameList(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("isActual"))));
             } while (c.moveToNext());
         }
@@ -338,7 +336,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (m > 0) {
             BtList2.removeViews(0, m);
         }
-        //
     }
     public void onClick_Categories(View view) {
         button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
