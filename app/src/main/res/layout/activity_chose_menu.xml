@@ -24,20 +24,114 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/intro"
-            android:text="FINIST"
+            app:fontFamily="@font/intro"
+            android:text="@string/finist"
             android:textColor="#000"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             android:id="@+id/textAdmPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textFinist"
+            android:layout_alignStart="@+id/textFinist"
             android:layout_alignLeft="@+id/textFinist"
-            android:fontFamily="@font/robotolight"
-            android:text="Административная панель"
+            app:fontFamily="@font/robotolight"
+            android:text="@string/panel"
             android:textColor="#000"
             android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btnBackTable"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#fff"
+            android:text="Вернуться к выбору стола" />
+
+        <TextView
+            android:id="@+id/textNavMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textFinist"
+            android:layout_alignStart="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            android:layout_marginTop="30dp"
+            app:fontFamily="@font/robotoregular"
+            android:text="Навигационное меню - Стол №1 (0руб.)"
+            android:textColor="#000"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/textCatMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textNavMenu"
+            android:layout_alignStart="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            android:layout_marginTop="5dp"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Категории меню"
+            android:textSize="17sp"/>
+
+        <ListView
+            android:id="@+id/lvCategory"
+            android:layout_width="143dp"
+            android:layout_height="519dp"
+            android:layout_alignStart="@+id/textCatMenu"
+            android:layout_alignLeft="@+id/textCatMenu"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp" />
+
+        <GridView
+            android:id="@+id/gvProds"
+            android:layout_width="497dp"
+            android:layout_height="508dp"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/lvCategory"
+            android:layout_toLeftOf="@id/multiCurZak"
+            android:layout_toRightOf="@id/lvCategory"
+            android:layout_toStartOf="@id/multiCurZak"
+            an/>
+
+        <EditText
+            android:id="@+id/multiCurZak"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/btnBackTable"
+            android:layout_alignEnd="@id/btnBackTable"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginTop="20dp"
+            android:layout_alignBottom="@id/gvProds"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:background="#fff"/>
+
+        <TextView
+            android:id="@+id/tvGoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textNavMenu"
+            android:layout_alignBottom="@+id/textCatMenu"
+            android:layout_alignStart="@+id/gvProds"
+            android:layout_alignLeft="@+id/gvProds"
+            android:layout_marginTop="5dp"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Категории товаров"
+            android:textSize="17sp"/>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
