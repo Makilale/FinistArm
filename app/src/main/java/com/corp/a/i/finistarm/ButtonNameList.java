@@ -13,11 +13,11 @@ public class ButtonNameList {
         this.id = id;
     }
 
-    public int getPrice() {
+    public int getId() {
         return id;
     }
 
-    public void setPrice(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -8,9 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -34,10 +35,12 @@ public class SettingsActivity extends AppCompatActivity {
     Button button_settings_back;
     Button button_halls, button_accounts, button_stock, button_categories;
     Button add_hall, add_account;
-    Button btnNew, btnNewDelete;
+    Button btnNew;
+    ImageButton btnNewDelete;
+    EditText Products_Name, Products_Price;
     TextView TW;
     //String lg = "", ps = "", nm = "";
-    public Button btDeletePrev = null;
+    public ImageButton btDeletePrev = null;
     public Button btAccPrev = null;
     public ScrollView SC;
     public TableLayout BtList2;
@@ -46,25 +49,24 @@ public class SettingsActivity extends AppCompatActivity {
     public int i = 0, m = 0;
     public Boolean flag = true;
 
-    public void setTableLayout(TableRow tb)
-    {
-        SC.setVisibility(ScrollView.VISIBLE);
-        BtList2.setVisibility(TableLayout.VISIBLE);
-        GV.setVisibility(GridView.GONE);
-        this.BtList2.addView(tb);
-    }
-
-    public Button add_btn(int j, View view, int width) {
+    public Button add_btn_control(int j) {
         Button btn = new Button(BtList2.getContext());
-        btn.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
-        btn.setLayoutParams(new TableRow.LayoutParams(width, width));
+        btn.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_menu_butten_control_settings));
+        btn.setLayoutParams(new TableRow.LayoutParams(-2, -2));
         btn.setTextSize(18);
         btn.setText("");
         btn.setId(j);
         return btn;
     }
 
-    public TableRow add_Trow(Button i, Button j, int id) {
+    public ImageButton add_btn_delete(int j, int width) {
+        ImageButton btn = new ImageButton(BtList2.getContext());
+        btn.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher_background));
+        btn.setLayoutParams(new TableRow.LayoutParams(width, width));
+        btn.setId(j);
+        return btn;
+    }
+    public TableRow add_Trow(Button i, ImageButton j, int id) {
         TableRow tableRow = new TableRow(BtList2.getContext());
         tableRow.addView(i);
         tableRow.addView(j);
@@ -74,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void add_clickListener_halls() {
         if (i > 1) {
-            btDeletePrev = (Button) findViewById(i * 10);
+            btDeletePrev = (ImageButton) findViewById(i * 10);
             //int m = btDeletePrev.getId();
             btDeletePrev.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
                     db.delete("Halls","isActual = " + i, null);
                     db.close();
                     if (i-- > 2) {
-                        btDeletePrev = (Button) findViewById(i * 10);
+                        btDeletePrev = (ImageButton) findViewById(i * 10);
                         btDeletePrev.setVisibility(Button.VISIBLE);
                     }
                 }
@@ -96,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void add_clickListener_accuants() {
         if (i > 1) {
-            btDeletePrev = (Button) findViewById(i * 10);
+            btDeletePrev = (ImageButton) findViewById(i * 10);
             //int m = btDeletePrev.getId();
             btDeletePrev.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,9 +144,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void add_two_btn(View view, int i, int tag) {
-        btnNew = add_btn(i, view, LayoutParams.WRAP_CONTENT);
+        btnNew = add_btn_control(i);
         btnNew.setTag(tag);
-        btnNewDelete = add_btn(i * 10, view, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+        btnNewDelete = add_btn_delete(i * 10, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         btnNewDelete.setTag(tag);
         BtList2.addView(add_Trow(btnNew, btnNewDelete, i));
     }
@@ -239,7 +241,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (i > 1) {
-                    btDeletePrev = (Button) findViewById(i * 10);
+                    btDeletePrev = (ImageButton) findViewById(i * 10);
                     btDeletePrev.setVisibility(Button.INVISIBLE);
                 }
                 add_two_btn(view, ++i, i);
@@ -337,16 +339,68 @@ public class SettingsActivity extends AppCompatActivity {
             BtList2.removeViews(0, m);
         }
     }
+    public EditText add_et(int j) {
+        EditText ET = new EditText(this);
+        ET.setBackgroundDrawable(getResources().getDrawable(R.drawable.login_edit_text));
+        int hight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+        int width =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+        ET.setLayoutParams(new TableRow.LayoutParams( hight ,width));
+        ET.setTextSize(24);
+        ET.setText("");
+        ET.setId(j);
+        ET.setBackgroundResource(R.drawable.login_edit_text);
+        ET.setPaddingRelative(50,1,1,1);
+        return ET;
+    }
+
+    public TableRow add_Trow(EditText i, EditText j, int id) {
+        TableRow tableRow = new TableRow(this);
+        tableRow.addView(i);
+        tableRow.addView(j);
+        tableRow.setId(id * 100);
+        return tableRow;
+    }
+    public void add_two_et( int i, int tag) {
+        Products_Name = add_et(i);
+        Products_Name.setTag(tag);
+        Products_Price = add_et(i * 10);
+        Products_Price.setTag(tag);
+        BtList2.addView(add_Trow(Products_Name, Products_Price, i));
+    }
+    public void initialization_Products(int id)
+    {
+        SC.setVisibility(ScrollView.VISIBLE);
+        BtList2.setVisibility(TableLayout.VISIBLE);
+        GV.setVisibility(GridView.GONE);
+        TW.setText(getResources().getText(R.string.settings_categories_goods_p2));
+        dbHelper = new DBHelper(this);
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
+        String [] columns = new String[] { "isActual", "idCategory", "name", "price"};
+        Cursor c = db.query("Products", columns, null, null, null, null, null );
+        if(c.moveToFirst()) {
+            do {
+                String NameCol = c.getString(c.getColumnIndex("name"));
+                String PriceCol = c.getString(c.getColumnIndex("price"));
+                if(c.getInt(c.getColumnIndex("idCategory")) == id) {
+                    add_two_et(++i, i);
+                    Products_Name.setText(NameCol);
+                    Products_Price.setText(PriceCol);
+                }
+            } while (c.moveToNext());
+        }
+        dbHelper.close();
+    }
     public void onClick_Categories(View view) {
-        button_halls.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        button_accounts.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        button_stock.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings));
-        button_categories.setBackgroundDrawable(view.getContext().getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
+        button_halls.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_accounts.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_stock.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_menu_button_settings));
+        button_categories.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_menu_button_settings_cliked));
         BtList2.setVisibility(TableLayout.GONE);
         add_account.setVisibility(Button.GONE);
         add_hall.setVisibility(Button.GONE);
         VP.setVisibility(View.GONE);
-        TW.setText(view.getContext().getResources().getText(R.string.settings_categories_goods_p1));
+        TW.setText(getResources().getText(R.string.settings_categories_goods_p1));
         TW.setVisibility(TextView.VISIBLE);
         GV.setVisibility(GridView.VISIBLE);
         initialization_Categories(view);
