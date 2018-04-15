@@ -103,8 +103,7 @@
             android:layout_toEndOf="@id/lvCategory"
             android:layout_toLeftOf="@id/multiCurZak"
             android:layout_toRightOf="@id/lvCategory"
-            android:layout_toStartOf="@id/multiCurZak"
-            an/>
+            android:layout_toStartOf="@id/multiCurZak" />
 
         <EditText
             android:id="@+id/multiCurZak"
@@ -192,6 +191,18 @@
             android:layout_marginBottom="10dp"
             android:layout_alignTop="@id/multiCurZak"
             android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_below="@id/textAdmPanel"
+            android:layout_marginTop="7dp"
+            android:layout_alignRight="@id/textContainTable"
+            android:layout_alignParentLeft="true"
+            android:background="#fff"
             android:ems="10"
             android:inputType="textMultiLine" />
 
