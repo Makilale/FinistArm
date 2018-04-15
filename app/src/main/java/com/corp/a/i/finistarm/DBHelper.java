@@ -39,17 +39,23 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO \"Login\" VALUES (\"1\",\"Администратор\", \"2121123q\", \"Programmer\", \"1\")");
         db.execSQL("INSERT INTO `Category` VALUES (\"0\",\"Кальяны\", \"1\")");
         db.execSQL("INSERT INTO `Category` VALUES (\"0\",\"Бар\",\"2\" )");
+        db.execSQL("INSERT INTO `StockCategory` VALUES (\"0\",\"Для кальянов\", \"1\")");
+        db.execSQL("INSERT INTO `StockCategory` VALUES (\"0\",\"Для бара\",\"2\" )");
         db.execSQL("INSERT INTO \"Stock\" VALUES (\"1\",\"Dark Side\",\"5000\",\"1\",\"1\")");
         db.execSQL("INSERT INTO \"Stock\" VALUES (\"1\",\"Daily Hookah\",\"5000\",\"1\",\"1\")");
         db.execSQL("INSERT INTO \"Stock\" VALUES (\"1\",\"Tangiers\",\"5000\",\"1\",\"1\")");
         db.execSQL("INSERT INTO `Value` VALUES (\"Гр.\",\"1\")");
-        db.execSQL("INSERT INTO `Value` VALUES (\"Мл.\",\"1\")");
-        db.execSQL("INSERT INTO `Value` VALUES (\"Шт.\", \"1\")");
-        db.execSQL("INSERT INTO `Halls` VALUES (\"Зал №1\", \"1\")");
+        db.execSQL("INSERT INTO `Value` VALUES (\"Мл.\",\"2\")");
+        db.execSQL("INSERT INTO `Value` VALUES (\"Шт.\", \"3\")");
+        db.execSQL("INSERT INTO `Halls` VALUES (\"Зал №1\", \"4\")");
         db.execSQL("INSERT INTO `Products` VALUES (\"1\",\"Товар №1\", \"10\",\"1\")");
-        db.execSQL("INSERT INTO `Products` VALUES (\"1\",\"Товар №2\", \"11\", \"1\")");
-        db.execSQL("INSERT INTO `Products` VALUES (\"2\",\"Товар №3\", \"12\", \"1\")");
-        db.execSQL("INSERT INTO `Products` VALUES (\"2\",\"Товар №4\", \"13\", \"1\")");
+        db.execSQL("INSERT INTO `Products` VALUES (\"1\",\"Товар №2\", \"11\", \"2\")");
+        db.execSQL("INSERT INTO `Products` VALUES (\"2\",\"Товар №3\", \"12\", \"3\")");
+        db.execSQL("INSERT INTO `Products` VALUES (\"2\",\"Товар №4\", \"13\", \"4\")");
+        db.execSQL("INSERT INTO \"Stock\" VALUES (\"1\",\"Позиция №1\", \"10\",\"1\",\"1\")");
+        db.execSQL("INSERT INTO \"Stock\" VALUES (\"1\",\"Позиция №2\", \"11\",\"2\", \"2\")");
+        db.execSQL("INSERT INTO \"Stock\" VALUES (\"2\",\"Позиция №3\", \"12\",\"3\", \"3\")");
+        db.execSQL("INSERT INTO \"Stock\" VALUES (\"2\",\"Позиция №4\", \"13\",\"3\", \"4\")");
     }
 
     @Override

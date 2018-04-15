@@ -56,6 +56,22 @@
             android:textSize="16sp" />
 
         <Button
+            android:id="@+id/add_product"
+            style="@style/BtListStyle"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/view2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/view2"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginTop="40dp"
+            android:onClick="onClick_AddProduct"
+            android:text="@string/settings_product_add"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/add_hall"
             style="@style/BtListStyle"
             android:layout_width="180dp"
@@ -67,6 +83,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="145dp"
             android:layout_marginTop="40dp"
+            android:onClick="onClick_AddHall"
             android:text="@string/settings_halls_add"
             android:visibility="gone" />
 
@@ -101,6 +118,30 @@
             android:textAllCaps="false"
             android:textSize="18sp"
             android:visibility="visible" />
+
+        <Button
+            android:id="@+id/categories_back"
+            style="@style/CategoriesBackStyle"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@+id/view2"
+            android:layout_alignRight="@+id/view2"
+            android:layout_alignTop="@+id/textView"
+            android:onClick="onClick_Categories"
+            android:text="@string/settings_categories_back"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/stock_back"
+            style="@style/CategoriesBackStyle"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@+id/view2"
+            android:layout_alignRight="@+id/view2"
+            android:layout_alignTop="@+id/textView"
+            android:onClick="onClick_Stock"
+            android:text="@string/settings_categories_back"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/view"
@@ -424,7 +465,8 @@
             android:gravity="center"
             android:horizontalSpacing="10dp"
             android:numColumns="auto_fit"
-            android:verticalSpacing="20dp" />
+            android:verticalSpacing="20dp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

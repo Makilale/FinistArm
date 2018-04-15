@@ -24,4 +24,6 @@
     <string name="settings_stock_p2">Склад предприятия  |  Позиции</string>
     <string name="settings_categories_goods_p1">Категории и товары  |  Категории</string>
     <string name="settings_categories_goods_p2">Категории и товары  |  Товары</string>
+    <string name="settings_product_add">Добавить товар</string>
+    <string name="settings_categories_back">Вернуться в категории</string>
 </resources>
