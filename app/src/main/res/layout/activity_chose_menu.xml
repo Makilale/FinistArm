@@ -133,5 +133,67 @@
             android:text="Категории товаров"
             android:textSize="17sp"/>
 
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textCatMenu"
+            android:layout_alignStart="@+id/multiCurZak"
+            android:layout_alignLeft="@+id/multiCurZak"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Содержимое стола"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btnMovePos"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignStart="@id/multiCurZak"
+            android:layout_alignLeft="@id/multiCurZak"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignEnd="@id/multiCurZak"
+            android:layout_alignRight="@id/multiCurZak"
+            android:layout_marginEnd="20dp"
+            android:layout_above="@id/btnDelPos"
+            android:layout_marginBottom="5dp"
+            android:text="Перенести позицию"app:fontFamily="@font/robotoregular"
+            android:textColor="#fff"
+            android:background="#090" />
+
+        <Button
+            android:id="@+id/btnDelPos"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignStart="@id/multiCurZak"
+            android:layout_alignLeft="@id/multiCurZak"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignEnd="@id/multiCurZak"
+            android:layout_alignRight="@id/multiCurZak"
+            android:layout_marginEnd="20dp"
+            android:layout_alignBottom="@id/multiCurZak"
+            android:layout_marginBottom="10dp"
+            android:text="Удалить позицию"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#fff"
+            android:background="@color/colorDelete"/>
+
+        <EditText
+            android:id="@+id/textContainTable"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/btnMovePos"
+            android:layout_alignLeft="@id/btnMovePos"
+            android:layout_alignEnd="@id/btnMovePos"
+            android:layout_alignRight="@id/btnMovePos"
+            android:layout_above="@id/btnMovePos"
+            android:layout_marginBottom="10dp"
+            android:layout_alignTop="@id/multiCurZak"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
