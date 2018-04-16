@@ -31,6 +31,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 
 import static java.sql.Types.NULL;
+import static java.sql.Types.NUMERIC;
 
 /**
  * Created by GordeevMaxim on 22.03.2018.
@@ -141,7 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
                             ((TextView) findViewById(R.id.etLogin)).setText(c.getString(c.getColumnIndex("login")));
                             ((TextView) findViewById(R.id.etName)).setText(c.getString(c.getColumnIndex("pass")));
                             ((TextView) findViewById(R.id.etPass)).setText(c.getString(c.getColumnIndex("name")));
-                            ((TextView) findViewById(R.id.etLevel)).setText(""+c.getInt(c.getColumnIndex("idGroup")));
+                            ((Spinner) findViewById(R.id.etLevel)).setSelection(c.getInt(c.getColumnIndex("idGroup"))-1);
                         }
                     } while (c.moveToNext());
                     dbHelper.close();
@@ -165,7 +166,6 @@ public class SettingsActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.etLogin)).setText("");
         ((TextView) findViewById(R.id.etName)).setText("");
         ((TextView) findViewById(R.id.etPass)).setText("");
-        ((TextView) findViewById(R.id.etLevel)).setText("");
         FlagUpdateAcc = true;
     }
 
@@ -178,8 +178,8 @@ public class SettingsActivity extends AppCompatActivity {
         String lg = (((TextView) findViewById(R.id.etLogin)).getText().toString());
         String nm = (((TextView) findViewById(R.id.etName)).getText().toString());
         String ps = (((TextView) findViewById(R.id.etPass)).getText().toString());
-        int lv = Integer.parseInt(((TextView) findViewById(R.id.etLevel)).getText().toString());
-        insert_account(view, lg, nm, ps, lv, FlagUpdateAcc);
+        long lv = (((Spinner) findViewById(R.id.etLevel)).getSelectedItemId())+1;
+        insert_account(view, lg, nm, ps, (int)lv, FlagUpdateAcc);
     }
     public  void insert_account(View view, String lg, String nm, String ps,  int lv, boolean flag)
     {
@@ -213,22 +213,24 @@ public class SettingsActivity extends AppCompatActivity {
             db.close();
         }
     }
-    public void initialization_Halls(View view)
+    public void Inicialization_Halls(View view)
     {
         dbHelper = new DBHelper(this);
         // подключаемся к базе
         db = dbHelper.getWritableDatabase();
-        String [] columns = new String[] { "isActual", "name" };
+        String [] columns = new String[] { "rowid as id","isActual", "name" };
         Cursor c = db.query("Halls", columns, null, null, null, null, null );
-        c.moveToFirst();
-        do {
-            String NameCol = c.getString(c.getColumnIndex("name"));
-            add_two_btn(view, ++i, i);
-            btnNew.setText(NameCol);
-            add_clickListener_halls();
-            if (i!=c.getCount() || i == 1) btnNewDelete.setVisibility(Button.INVISIBLE);
-        } while (c.moveToNext());
-        dbHelper.close();
+        if(c.moveToFirst()) {
+            do {
+                int n = c.getInt(c.getColumnIndex("id"));
+                String NameCol = c.getString(c.getColumnIndex("name"));
+                add_two_btn(view, ++i, i);
+                btnNew.setText(NameCol);
+                add_clickListener_halls();
+                if (i != c.getCount() || i == 1) btnNewDelete.setVisibility(Button.INVISIBLE);
+            } while (c.moveToNext());
+            dbHelper.close();
+        }
     }
 
     public void onClick_AddHall(View view) {
@@ -273,10 +275,10 @@ public class SettingsActivity extends AppCompatActivity {
         add_hall.setVisibility(Button.VISIBLE);
         TW.setText(view.getContext().getResources().getText(R.string.settings_halls));
         TW.setVisibility(TextView.VISIBLE);
-        initialization_Halls(view);
+        Inicialization_Halls(view);
     }
 
-    public void initialization_Accounts(View view)
+    public void Inicialization_Accounts(View view)
     {
         dbHelper = new DBHelper(this);
         // подключаемся к базе
@@ -294,6 +296,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (i == 1) btnNewDelete.setVisibility(Button.INVISIBLE);
         } while (c.moveToNext());
         dbHelper.close();
+        ((Spinner) findViewById(R.id.etLevel)).setAdapter(Create_Adapter_Spinner("GroupLogin"));
     }
 
     public void onClick_Accounts(View view) {
@@ -320,7 +323,7 @@ public class SettingsActivity extends AppCompatActivity {
             BtList2.removeViews(0, m);
             i = 1;
         }
-        initialization_Accounts(view);
+        Inicialization_Accounts(view);
         TW.setText(view.getContext().getResources().getText(R.string.settings_acounts));
         TW.setVisibility(TextView.VISIBLE);
 
@@ -373,7 +376,7 @@ public class SettingsActivity extends AppCompatActivity {
             BtList2.addView(Inicialization_Healder(HeaderGoods));
         }
     }
-    public void initialization_Stock(int id) {
+    public void Inicialization_Stock(int id) {
         SC.setVisibility(ScrollView.VISIBLE);
         BtList2.setVisibility(TableLayout.VISIBLE);
         GV.setVisibility(GridView.GONE);
@@ -400,7 +403,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
         dbHelper.close();
         parentid = id;
-        add_product = (Button) findViewById(R.id.add_product);
         add_product.setVisibility(Button.VISIBLE);
         FlagUpadeteProd = true;
     }
@@ -425,6 +427,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         Flag = false;
         Inicialization_Categories("StockCategory");
+        FlagUpadeteProd = true;
     }
 
     public EditText add_et() {
@@ -471,9 +474,16 @@ public class SettingsActivity extends AppCompatActivity {
         Products_Name.setTag(tag);
         Products_Price = add_et();
         Products_Price.setTag(tag);
+        Products_Price.setInputType(NUMERIC);
         btnNewDelete = add_btn_delete(i);
-        if(Flag) BtList2.addView(add_Trow(Products_Name, Products_Price, btnNewDelete, i));
+        if(Flag) {
+            Products_Name.setText("Товар");
+            Products_Price.setText("0");
+            BtList2.addView(add_Trow(Products_Name, Products_Price, btnNewDelete, i));
+        }
         else{
+            Products_Name.setText("Позиция");
+            Products_Price.setText("0");
             sp = addSpinner();
             BtList2.addView(add_Trow(Products_Name, Products_Price, sp ,btnNewDelete, i));
         }
@@ -495,26 +505,37 @@ public class SettingsActivity extends AppCompatActivity {
                 //удлить из бд
                 m = m/10;
                 db = dbHelper.getWritableDatabase();
-                db.delete("Products", "isActual = " + m + " AND idCategory = " + parentid, null);
+                if(Flag) {
+                    db.delete("Products", "isActual = " + m + " AND idCategory = " + parentid, null);
+                } else
+                {
+                    db.delete("Stock", "isActual = " + m + " AND idCategory = " + parentid, null);
+                }
                 db.close();
             }
         });
     }
     public void onClick_AddProduct(View view) {
         add_two_et(++i, i);
-        Products_Name.setText("Товар");
-        Products_Price.setText("0");
         add_clickListener_products();
         //вставка в бд
         db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("isActual", i);
-        cv.put("name", "Товар");
-        cv.put("price", "0");
+        cv.put("name", Products_Name.getText().toString());
         cv.put("idCategory", parentid);
-        db.insert("Products",  null, cv);
+        if (Flag) {
+            cv.put("price", Products_Price.getText().toString());
+            db.insert("Products", null, cv);
+        } else
+        {
+            cv.put("amount", Products_Price.getText().toString());
+            cv.put("idValue", sp.getSelectedItemId()+1);
+            db.insert("Stock",  null, cv);
+        }
         db.close();
     }
+
     public void update_Products() {
         dbHelper = new DBHelper(this);
         // подключаемся к базе
@@ -525,36 +546,43 @@ public class SettingsActivity extends AppCompatActivity {
             EditText ET1 = (EditText) tb.getChildAt(0);
             EditText ET2 = (EditText) tb.getChildAt(1);
             int m = tb.getId();
-            m = m /1000;
+            m = m /10;
             cv.put("name", ET1.getText().toString());
-            cv.put("price", ET2.getText().toString());
             cv.put("idCategory", parentid);
-            db.update("Products", cv, "isActual = " + m + " AND idCategory = " + parentid, null);
+            if(Flag) {
+                cv.put("price", ET2.getText().toString());
+                db.update("Products", cv, "isActual = " + m + " AND idCategory = " + parentid, null);
+            } else {
+                Spinner sp = (Spinner) tb.getChildAt(2);
+                cv.put("idValue", sp.getSelectedItemId() + 1);
+                cv.put("amount", ET2.getText().toString());
+                db.update("Stock", cv, "isActual = " + m + " AND idCategory = " + parentid, null);
+            }
         }
         db.close();
         dbHelper.close();
     }
 
-    public String[] Create_List_Spinner()
+    public String[] Create_List_Spinner(String TableName)
     {
         String[] data = new String[3];
         dbHelper = new DBHelper(this);
         // подключаемся к базе
         db = dbHelper.getWritableDatabase();
-        String[] columns = new String[]{"isActual", "name"};
-        Cursor c = db.query("Value", columns, null, null, null, null, null);
+        String[] columns = new String[]{"rowid as id", "name"};
+        Cursor c = db.query(TableName, columns, null, null, null, null, null);
         if (c.moveToFirst()) {
             do {
-                data[c.getInt(c.getColumnIndex("isActual"))-1] = c.getString(c.getColumnIndex("name"));
+                data[c.getInt(c.getColumnIndex("id"))-1] = c.getString(c.getColumnIndex("name"));
             } while (c.moveToNext());
         }
         dbHelper.close();
         return data;
     }
 
-    public  ArrayAdapter<String> Create_Adapter_Spinner()
+    public  ArrayAdapter<String> Create_Adapter_Spinner(String str)
     {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, Create_List_Spinner());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, Create_List_Spinner(str));
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         return  adapter;
     }
@@ -566,7 +594,7 @@ public class SettingsActivity extends AppCompatActivity {
         int hight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, getResources().getDisplayMetrics());
         int width =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
         spinner.setLayoutParams(new TableRow.LayoutParams( hight ,width));
-        spinner.setAdapter(Create_Adapter_Spinner());
+        spinner.setAdapter(Create_Adapter_Spinner("Value"));
         /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -581,20 +609,20 @@ public class SettingsActivity extends AppCompatActivity {
         return  spinner;
     }
 
-    public void initialization(int id) {
+    public void Inicialization(int id) {
         if(Flag) {
-            initialization_Goods(id);
+            Inicialization_Goods(id);
             stock_back.setVisibility(Button.GONE);
             categories_back.setVisibility(Button.VISIBLE);
         }
         else {
-            initialization_Stock(id);
+            Inicialization_Stock(id);
             categories_back.setVisibility(Button.GONE);
             stock_back.setVisibility(Button.VISIBLE);
         }
     }
 
-    public void initialization_Goods(int id) {
+    public void Inicialization_Goods(int id) {
         SC.setVisibility(ScrollView.VISIBLE);
         BtList2.setVisibility(TableLayout.VISIBLE);
         GV.setVisibility(GridView.GONE);
@@ -619,7 +647,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
         dbHelper.close();
         parentid = id;
-        add_product = (Button) findViewById(R.id.add_product);
         add_product.setVisibility(Button.VISIBLE);
         FlagUpadeteProd = true;
     }

@@ -66,7 +66,7 @@ public class ButtonArrayAdapter extends ArrayAdapter{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ST.initialization((int)(button.getTag()));
+                ST.Inicialization((int)(button.getTag()));
             }
         });
         return button;

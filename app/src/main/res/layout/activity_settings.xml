@@ -246,7 +246,7 @@
             android:layout_marginBottom="60dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="12dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TableLayout
                 android:id="@+id/BtList2"
@@ -284,7 +284,7 @@
             android:layout_alignTop="@+id/scroll"
             android:layout_marginLeft="20dp"
             android:background="@drawable/login_rectangle"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -295,7 +295,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="55dp"
                 android:background="@drawable/login_edit_text"
                 android:ems="100"
                 android:fontFamily="@font/robotoregular"
@@ -326,7 +326,7 @@
                 android:layout_alignRight="@+id/etPass"
                 android:layout_alignStart="@+id/etPass"
                 android:layout_below="@+id/etPass"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/login_edit_text"
                 android:ems="10"
                 android:hint="@string/login_name"
@@ -354,7 +354,7 @@
                 android:layout_alignRight="@+id/etLogin"
                 android:layout_alignStart="@+id/etLogin"
                 android:layout_below="@+id/etLogin"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/login_edit_text"
                 android:ems="10"
                 android:hint="@string/login_pass"
@@ -373,7 +373,58 @@
                 app:layout_constraintTop_toBottomOf="@+id/etName"
                 app:layout_constraintVertical_bias="0.500" />
 
-            <EditText
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:text="@string/settings_acc_value"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/etLogin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_save"
+                style="@style/BtValueStyle"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginStart="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etLevel"
+                android:layout_marginTop="15dp"
+                android:onClick="onClick_SaveAccuant"
+                android:text="Сохранить" />
+
+            <Button
+                android:id="@+id/btn_cancal"
+                style="@style/BtCancelStyle"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginStart="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dp"
+                android:onClick="onClick_CancelAccuant"
+                android:text="Отмена" />
+
+            <Spinner
                 android:id="@+id/etLevel"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -382,8 +433,8 @@
                 android:layout_alignRight="@+id/etName"
                 android:layout_alignStart="@+id/etName"
                 android:layout_below="@+id/etName"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/login_edit_text"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/spinner"
                 android:ems="10"
                 android:hint="@string/login_level"
                 android:inputType="textPersonName"
@@ -400,51 +451,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPass"
                 app:layout_constraintVertical_bias="0.500" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="27dp"
-                android:fontFamily="@font/robotoregular"
-                android:text="@string/settings_acc_value"
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/etLogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_save"
-                style="@style/BtValueStyle"
-                android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:layout_alignLeft="@+id/etLevel"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/etLevel"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginStart="40dp"
-                android:onClick="onClick_SaveAccuant"
-                android:text="Сохранить" />
-
-            <Button
-                android:id="@+id/btn_cancal"
-                style="@style/BtCancelStyle"
-                android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:layout_alignEnd="@+id/etLevel"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/etLevel"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="40dp"
-                android:onClick="onClick_CancelAccuant"
-                android:text="Отмена" />
         </RelativeLayout>
 
 
