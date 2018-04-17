@@ -19,7 +19,6 @@ import com.corp.a.i.finistarm.Login;
 import com.corp.a.i.finistarm.MainActivity;
 import com.corp.a.i.finistarm.R;
 import com.corp.a.i.finistarm.fragment.ChoseMenuCategoryFragment;
-import com.corp.a.i.finistarm.Desks.ChoseMenuPositonFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,44 +27,28 @@ import java.util.Date;
 
 public class ChoseMenu extends AppCompatActivity implements View.OnClickListener {
 
-    Button saveChanges;
-    Button cancelChanges;
-    Button back;
-
-    TextView nameDesk;
-    TextView totalPriceOrder;
-
-
+    Cursor cursor;
+    ContentValues contentValues;
+    private String idTable, idHall, tableName;
+    private boolean isNewTable;
+    String curLog, idUser;
+    TextView currentLogin, exitLogin;
+    ArrayList<String> list;
+    Button saveAll, cancelAll, back;
+    TextView nameTable, totalPrice;
     FragmentManager manager;
     FragmentTransaction transaction;
     ChoseMenuCategoryFragment choseMenuCategoryFragment;
     ChoseMenuPositonFragment choseMenuPositonFragment;
-
     DBHelper dbHelper;
     SQLiteDatabase db;
-    Cursor cursor;
-    ContentValues contentValues;
-    private String idDesk;
-    private String idHall;
-    private String deskName;
-    private boolean isNewAddedDesk;
-    String nameUser;
-    String idUser;
-
-    TextView nameUserTV;
-    TextView exitLogin;
-    ArrayList<String> list;
-
     int notCash = 0;
-
-    public void setDeskName(String deskName) {
-        this.deskName = deskName;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
-
-    public void setNewAddedDesk(boolean newAddedDesk) {
-        isNewAddedDesk = newAddedDesk;
+    public void setNewTable(boolean newTable) {
+        isNewTable = newTable;
     }
-
     public void setIdHall(String idHall) {
         this.idHall = idHall;
     }
@@ -74,83 +57,80 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chose_menu);
-        nameDesk = (TextView) findViewById(R.id.nameDesk);
-        Bundle b = getIntent().getExtras();
-        if(b!=null)
+        nameTable = (TextView) findViewById(R.id.nameDesk);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
         {
-            deskName = b.getString("nameDesk");
-            nameDesk.setText(deskName + " ");
-            idHall = b.getString("idHall");
-            isNewAddedDesk = b.getBoolean("isNewAddedDesk");
-            if(b.containsKey("idDesk"))
-                idDesk = b.getString("idDesk");
-            nameUser = b.getString("nameUser");
-            idUser = b.getString("idUser");
+            if(bundle.containsKey("idTable"))
+                idTable = bundle.getString("idTable");
+            tableName = bundle.getString("nameTable");
+            nameTable.setText(tableName + " ");
+            idHall = bundle.getString("idHall");
+            curLog = bundle.getString("curLog");
+            idUser = bundle.getString("idUser");
+            isNewTable = bundle.getBoolean("isNewTable");
         }
-        nameUserTV = (TextView) findViewById(R.id.userNameChoseMenu);
-        nameUserTV.setText(nameUser);
+        currentLogin = (TextView) findViewById(R.id.userNameChoseMenu);
+        currentLogin.setText(curLog);
         exitLogin = (TextView) findViewById(R.id.exitLoginChoseMenu);
         exitLogin.setOnClickListener(this);
         back = (Button) findViewById(R.id.backToMainMenuDesk);
-        saveChanges = (Button) findViewById(R.id.saveChange);
-        cancelChanges = (Button) findViewById(R.id.cancelChange);
-        saveChanges.setOnClickListener(this);
-        cancelChanges.setOnClickListener(this);
+        saveAll = (Button) findViewById(R.id.saveChange);
+        cancelAll = (Button) findViewById(R.id.cancelChange);
+        saveAll.setOnClickListener(this);
+        cancelAll.setOnClickListener(this);
         back.setOnClickListener(this);
 
-
-        totalPriceOrder =(TextView) findViewById(R.id.totalPriceOrder);
+        totalPrice =(TextView) findViewById(R.id.totalPriceOrder);
 
         dbHelper = new DBHelper(this);
         db = dbHelper.getWritableDatabase();
         initializeDB();
 
         choseMenuPositonFragment = new ChoseMenuPositonFragment();
-        choseMenuPositonFragment.setNewAddedDesk(isNewAddedDesk);
-        choseMenuPositonFragment.setName(nameDesk.getText().toString());
-        choseMenuPositonFragment.setIdDesk(idDesk);
-
-
-
+        choseMenuPositonFragment.setNewAddedDesk(isNewTable);
+        choseMenuPositonFragment.setName(nameTable.getText().toString());
+        choseMenuPositonFragment.setIdDesk(idTable);
         choseMenuCategoryFragment = new ChoseMenuCategoryFragment();
         choseMenuCategoryFragment.setIdCategory("0");
         choseMenuCategoryFragment.setIdChildCategory("");
         choseMenuCategoryFragment.setChoseMenuPositonFragment(choseMenuPositonFragment);
-        choseMenuCategoryFragment.setNewAddedDesk(isNewAddedDesk);
-
+        choseMenuCategoryFragment.setNewAddedDesk(isNewTable);
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         transaction.add(R.id.fragContCategory, choseMenuCategoryFragment, ChoseMenuCategoryFragment.TAG);
-
-        if(!isNewAddedDesk)
+        if(isNewTable==false)
         {
             transaction.add(R.id.fragContPosition,choseMenuPositonFragment,ChoseMenuPositonFragment.TAG);
         }
         transaction.commit();
-
-
-
-
     }
 
     private void initializeDB() {
-       if(isNewAddedDesk)
+       if(isNewTable)
        {
-           cursor = db.query("Desks",new String[]{"MAX(rowid) AS lastIdDesk"},
-                   null,null,
-                   null,null,null);
+           cursor = db.query(
+                   "Desks",new String[]{"MAX(rowid) AS lastIdDesk"},
+                   null,
+                   null,
+                   null,
+                   null,
+                   null);
            if(cursor.moveToFirst())
-               idDesk = Integer.toString(cursor.getInt(cursor.getColumnIndex("lastIdDesk")) + 1);
+               idTable = Integer.toString(cursor.getInt(cursor.getColumnIndex("lastIdDesk")) + 1);
            else
-               idDesk = "1";
+               idTable = "1";
        }
 
        try
        {
-           cursor = db.query("DeskProduct join Products ON DeskProduct.idProduct = Products.rowid",
+           cursor = db.query(
+                   "DeskProduct join Products ON DeskProduct.idProduct = Products.rowid",
                    new String[]{"SUM(Products.price) AS totalPrice"},
-                   "DeskProduct.idDesk = ? AND DeskProduct.isActual=? AND Products.isActual=?",new String[]{idDesk,"1","1"},
-                   null,null,null);
+                   "DeskProduct.idTable = ? AND DeskProduct.isActual=? AND Products.isActual=?",new String[]{idTable,"1","1"},
+                   null,
+                   null,
+                   null);
        }
        catch (Exception e)
        {
@@ -161,34 +141,33 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
         {
             String price = cursor.getString(cursor.getColumnIndex("totalPrice"));
             if(price != null)
-                totalPriceOrder.setText("("+ price + "руб.)");
+                totalPrice.setText("("+ price + "руб.)");
             else
-                totalPriceOrder.setText("(0руб.)");
+                totalPrice.setText("(0руб.)");
         }
         else
-            totalPriceOrder.setText("(0руб.)");
+            totalPrice.setText("(0руб.)");
 
 
     }
-
 
     @Override
     public void onClick(View v) {
         switch (v.getId())
         {
             case R.id.saveChange:
-                ArrayList<ItemChoseMenu> itemChoseMenus =  choseMenuPositonFragment.getNamesPosition();
-                ArrayList<ItemChoseMenu> idPosition = choseMenuPositonFragment.getItemDeleted();
-                incrementAndDecrementStock(itemChoseMenus,idPosition);
-                if(isNewAddedDesk)
+                ArrayList<ItemChoseMenu> itemsFromPosition =  choseMenuPositonFragment.getNamesPosition();
+                ArrayList<ItemChoseMenu> delFromPosition = choseMenuPositonFragment.getItemDeleted();
+                correctStock(itemsFromPosition,delFromPosition);
+                if(isNewTable)
                 {
-                    if(itemChoseMenus!=null)
-                        for(ItemChoseMenu itemChoseMenu: itemChoseMenus)
+                    if(itemsFromPosition!=null)
+                        for(ItemChoseMenu itemChoseMenu: itemsFromPosition)
                         {
                             if(!itemChoseMenu.isReport())
                                 notCash += Integer.parseInt(itemChoseMenu.getPricePostion());
                             contentValues = new ContentValues();
-                            contentValues.put("idDesk", Integer.parseInt(idDesk));
+                            contentValues.put("idTable", Integer.parseInt(idTable));
                             contentValues.put("idProduct", Integer.parseInt(itemChoseMenu.getIdProduct()));
                             contentValues.put("isActual", 1);
                             db.insert("DeskProduct", null,contentValues);
@@ -196,26 +175,24 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
                     contentValues = new ContentValues();
                     contentValues.put("idHall", Integer.parseInt(idHall));
                     contentValues.put("notCash", notCash);
-                    contentValues.put("name", deskName);
+                    contentValues.put("name", tableName);
                     contentValues.put("isActual", 1);
-                    // TODO работа с датой и временем
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat df1 = new SimpleDateFormat("HH:mm:ss");
                     String formattedDate = df.format(c);
-                    String format  =df1.format(c);
+                    String format  = df1.format(c);
                     contentValues.put("dB", formattedDate + " " + format);
                     contentValues.put("isCheck", 0);
                     db.insert("Desks", null,contentValues);
-
                 }
                 else
                 {
-                    if(!idPosition.isEmpty())
+                    if(!delFromPosition.isEmpty())
                     {
                         contentValues = new ContentValues();
                         contentValues.put("isActual", 0);
-                        for(ItemChoseMenu i: idPosition)
+                        for(ItemChoseMenu i: delFromPosition)
                         {
                             if(i.isReport())
                                 notCash-=Integer.parseInt(i.getPricePostion());
@@ -223,49 +200,50 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
                         }
                     }
 
-                    for(ItemChoseMenu itemChoseMenu: itemChoseMenus)
+                    for(ItemChoseMenu itemFromPos: itemsFromPosition)
                     {
-                        if(itemChoseMenu.isNew())
+                        if(itemFromPos.isNew())
                         {
-
                             contentValues = new ContentValues();
-                            contentValues.put("idDesk", Integer.parseInt(idDesk));
-                            contentValues.put("idProduct", Integer.parseInt(itemChoseMenu.getIdProduct()));
+                            contentValues.put("idTable", Integer.parseInt(idTable));
+                            contentValues.put("idProduct", Integer.parseInt(itemFromPos.getIdProduct()));
                             contentValues.put("isActual", 1);
-                            db.insert("DeskProduct", null,contentValues);
-                            if(!itemChoseMenu.isReport())
-                                notCash+=Integer.parseInt(itemChoseMenu.getPricePostion());
+                            db.insert("DeskProduct",
+                                    null,contentValues);
+                            if(!itemFromPos.isReport())
+                                notCash+=Integer.parseInt(itemFromPos.getPricePostion());
                         }
                     }
                     contentValues = new ContentValues();
                     contentValues.put("notCash", notCash);
-                    db.update("Desks", contentValues, "rowid=?", new String[]{idDesk});
+                    db.update("Desks", contentValues,
+                            "rowid=?", new String[]{idTable});
 
                 }
 
-                Intent intent2 = new Intent(this,MainActivity.class);
-                Bundle b3 = new Bundle();
-                b3.putString("nameUser", nameUser);
-                b3.putString("idUser", idUser);
-                intent2.putExtras(b3);
-                startActivity(intent2);
-                break;
-
-            case R.id.cancelChange:
                 Intent intent = new Intent(this,MainActivity.class);
                 Bundle b = new Bundle();
-                b.putString("nameUser", nameUser);
+                b.putString("curLog", curLog);
                 b.putString("idUser", idUser);
                 intent.putExtras(b);
                 startActivity(intent);
                 break;
-            case R.id.backToMainMenuDesk:
+
+            case R.id.cancelChange:
                 Intent intent1 = new Intent(this,MainActivity.class);
                 Bundle b1 = new Bundle();
-                b1.putString("nameUser", nameUser);
+                b1.putString("curLog", curLog);
                 b1.putString("idUser", idUser);
                 intent1.putExtras(b1);
                 startActivity(intent1);
+                break;
+            case R.id.backToMainMenuDesk:
+                Intent intent2 = new Intent(this,MainActivity.class);
+                Bundle b2 = new Bundle();
+                b2.putString("curLog", curLog);
+                b2.putString("idUser", idUser);
+                intent2.putExtras(b2);
+                startActivity(intent2);
                 break;
             case R.id.exitLoginChoseMenu:
                 startActivity(new Intent(this, Login.class));
@@ -274,37 +252,37 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void incrementAndDecrementStock(ArrayList<ItemChoseMenu> idPos, ArrayList<ItemChoseMenu> itemDel)
+    private void correctStock(ArrayList<ItemChoseMenu> itemPosition, ArrayList<ItemChoseMenu> deletedPosition)
     {
-        Cursor cursor1;
-        if(idPos!=null && itemDel!=null)
-        if(!idPos.isEmpty())
+        Cursor cursor_sec;
+        if(itemPosition!=null && deletedPosition!=null)
         {
-            if(isNewAddedDesk)
+            if(isNewTable)
             {
-                for(int i = 0; i<idPos.size();i++)
+                for(int i = 0; i<itemPosition.size();i++)
                 {
-
                     cursor = db.query("Technology",
                             new String[]{"idProductStock", "weight"},
                             "idProduct=? AND isActual = 1",
-                            new String[]{idPos.get(i).getIdProduct()},
+                            new String[]{itemPosition.get(i).getIdProduct()},
                             null,
                             null,
                             null);
 
                     while(cursor.moveToNext()) {
                         String idProductStock = cursor.getString(cursor.getColumnIndex("idProductStock"));
-                        int weightTechnology = cursor.getInt(cursor.getColumnIndex("weight"));
-                        cursor1 = db.query("Stock", new String[]{"amount"},
+                        int wieghtProd = cursor.getInt(cursor.getColumnIndex("weight"));
+                        cursor_sec = db.query("Stock", new String[]{"amount"},
                                 "rowid=? AND isActual=1", new String[]{idProductStock},
-                                null, null, null);
-                        cursor1.moveToFirst();
-                        int amount = cursor1.getInt(cursor1.getColumnIndex("amount"));
-                        if (amount - weightTechnology >= 0)
+                                null,
+                                null,
+                                null);
+                        cursor_sec.moveToFirst();
+                        int amount = cursor_sec.getInt(cursor_sec.getColumnIndex("amount"));
+                        if (amount - wieghtProd >= 0)
                         {
                             contentValues = new ContentValues();
-                            contentValues.put("amount", amount-weightTechnology);
+                            contentValues.put("amount", amount-wieghtProd);
                             db.update("Stock", contentValues,"rowid=?",new String[]{idProductStock});
                         }
                     }
@@ -312,14 +290,16 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
             }
             else
             {
-                if (!itemDel.isEmpty()) {
-                    for (int i = 0; i < itemDel.size(); i++) {
+                if (!deletedPosition.isEmpty()) {
+                    for (int i = 0; i < deletedPosition.size(); i++) {
 
                         cursor = db.query("DeskProduct",
                                 new String[]{"idProduct"},
                                 "rowid=? AND isActual=?",
-                                new String[]{itemDel.get(i).getIdProduct(), "1"},
-                                null,null,null);
+                                new String[]{deletedPosition.get(i).getIdProduct(), "1"},
+                                null,
+                                null,
+                                null);
                         cursor.moveToFirst();
                         String id = cursor.getString(cursor.getColumnIndex("idProduct"));
 
@@ -334,27 +314,30 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
                         while (cursor.moveToNext()) {
                             String idProductStock = cursor.getString(cursor.getColumnIndex("idProductStock"));
                             int weightTechnology = cursor.getInt(cursor.getColumnIndex("weight"));
-                            cursor1 = db.query("Stock", new String[]{"amount"},
+                            cursor_sec = db.query("Stock", new String[]{"amount"},
                                     "rowid=? AND isActual=1", new String[]{idProductStock},
-                                    null, null, null);
-                            cursor1.moveToFirst();
-                            int amount = cursor1.getInt(cursor1.getColumnIndex("amount"));
+                                    null,
+                                    null,
+                                    null);
+                            cursor_sec.moveToFirst();
+                            int amount = cursor_sec.getInt(cursor_sec.getColumnIndex("amount"));
                             contentValues = new ContentValues();
                             contentValues.put("amount", amount + weightTechnology);
-                            db.update("Stock", contentValues, "rowid=?", new String[]{idProductStock});
+                            db.update("Stock", contentValues,
+                                    "rowid=?", new String[]{idProductStock});
                         }
                     }
                 }
                 else
-                    if(!idPos.isEmpty())
-                    for(int i = 0; i<idPos.size();i++)
+                    if(!itemPosition.isEmpty())
+                    for(int i = 0; i<itemPosition.size();i++)
                     {
-                        if(idPos.get(i).isNew())
+                        if(itemPosition.get(i).isNew())
                         {
                             cursor = db.query("Technology",
                                     new String[]{"idProductStock", "weight"},
                                     "idProduct=? AND isActual = 1",
-                                    new String[]{idPos.get(i).getIdProduct()},
+                                    new String[]{itemPosition.get(i).getIdProduct()},
                                     null,
                                     null,
                                     null);
@@ -362,11 +345,11 @@ public class ChoseMenu extends AppCompatActivity implements View.OnClickListener
                         while(cursor.moveToNext()) {
                             String idProductStock = cursor.getString(cursor.getColumnIndex("idProductStock"));
                             int weightTechnology = cursor.getInt(cursor.getColumnIndex("weight"));
-                            cursor1 = db.query("Stock", new String[]{"amount"},
+                            cursor_sec = db.query("Stock", new String[]{"amount"},
                                 "rowid=? AND isActual=1", new String[]{idProductStock},
                                     null, null, null);
-                            cursor1.moveToFirst();
-                            int amount = cursor1.getInt(cursor1.getColumnIndex("amount"));
+                            cursor_sec.moveToFirst();
+                            int amount = cursor_sec.getInt(cursor_sec.getColumnIndex("amount"));
                             if (amount - weightTechnology >= 0)
                             {
                                 contentValues = new ContentValues();
