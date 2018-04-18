@@ -6,4 +6,205 @@
     android:layout_height="match_parent"
     tools:context="com.corp.a.i.finistarm.ChoseMenu">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textFinist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:fontFamily="@font/intro"
+            android:text="@string/finist"
+            android:textColor="#000"
+            android:textSize="24sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/textAdmPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textFinist"
+            android:layout_alignStart="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            app:fontFamily="@font/robotolight"
+            android:text="@string/panel"
+            android:textColor="#000"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btnBackTable"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#fff"
+            android:text="Вернуться к выбору стола" />
+
+        <TextView
+            android:id="@+id/textNavMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textFinist"
+            android:layout_alignStart="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            android:layout_marginTop="30dp"
+            app:fontFamily="@font/robotoregular"
+            android:text="Навигационное меню - Стол №1 (0руб.)"
+            android:textColor="#000"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/textCatMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textNavMenu"
+            android:layout_alignStart="@+id/textFinist"
+            android:layout_alignLeft="@+id/textFinist"
+            android:layout_marginTop="5dp"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Категории меню"
+            android:textSize="17sp"/>
+
+        <ListView
+            android:id="@+id/lvCategory"
+            android:layout_width="143dp"
+            android:layout_height="519dp"
+            android:layout_alignStart="@+id/textCatMenu"
+            android:layout_alignLeft="@+id/textCatMenu"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp" />
+
+        <GridView
+            android:id="@+id/gvProds"
+            android:layout_width="497dp"
+            android:layout_height="508dp"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/lvCategory"
+            android:layout_toLeftOf="@id/multiCurZak"
+            android:layout_toRightOf="@id/lvCategory"
+            android:layout_toStartOf="@id/multiCurZak" />
+
+        <EditText
+            android:id="@+id/multiCurZak"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/btnBackTable"
+            android:layout_alignEnd="@id/btnBackTable"
+            android:layout_below="@id/textCatMenu"
+            android:layout_marginTop="20dp"
+            android:layout_alignBottom="@id/gvProds"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:background="#fff"/>
+
+        <TextView
+            android:id="@+id/tvGoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textNavMenu"
+            android:layout_alignBottom="@+id/textCatMenu"
+            android:layout_alignStart="@+id/gvProds"
+            android:layout_alignLeft="@+id/gvProds"
+            android:layout_marginTop="5dp"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Категории товаров"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textCatMenu"
+            android:layout_alignStart="@+id/multiCurZak"
+            android:layout_alignLeft="@+id/multiCurZak"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#000"
+            android:text="Содержимое стола"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btnMovePos"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignStart="@id/multiCurZak"
+            android:layout_alignLeft="@id/multiCurZak"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignEnd="@id/multiCurZak"
+            android:layout_alignRight="@id/multiCurZak"
+            android:layout_marginEnd="20dp"
+            android:layout_above="@id/btnDelPos"
+            android:layout_marginBottom="5dp"
+            android:text="Перенести позицию"app:fontFamily="@font/robotoregular"
+            android:textColor="#fff"
+            android:background="#090" />
+
+        <Button
+            android:id="@+id/btnDelPos"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignStart="@id/multiCurZak"
+            android:layout_alignLeft="@id/multiCurZak"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignEnd="@id/multiCurZak"
+            android:layout_alignRight="@id/multiCurZak"
+            android:layout_marginEnd="20dp"
+            android:layout_alignBottom="@id/multiCurZak"
+            android:layout_marginBottom="10dp"
+            android:text="Удалить позицию"
+            app:fontFamily="@font/robotoregular"
+            android:textColor="#fff"
+            android:background="@color/colorDelete"/>
+
+        <EditText
+            android:id="@+id/textContainTable"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/btnMovePos"
+            android:layout_alignLeft="@id/btnMovePos"
+            android:layout_alignEnd="@id/btnMovePos"
+            android:layout_alignRight="@id/btnMovePos"
+            android:layout_above="@id/btnMovePos"
+            android:layout_marginBottom="10dp"
+            android:layout_alignTop="@id/multiCurZak"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_below="@id/textAdmPanel"
+            android:layout_marginTop="7dp"
+            android:layout_alignRight="@id/textContainTable"
+            android:layout_alignParentLeft="true"
+            android:background="#fff"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

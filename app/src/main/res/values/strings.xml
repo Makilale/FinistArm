@@ -8,4 +8,13 @@
     <string name="login_autoriz">Авторизация</string>
     <string name="menu_close_day">Закрыть день</string>
     <string name="menu_open_day">Открыть день</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_report">Сформировать отчёт</string>
+    <string name="settings_back">Вернуться на главный экран</string>
+    <string name="settings_halls">Залы</string>
+    <string name="settings_halls_add">Добавить зал</string>
+    <string name="settings_acounts">Аккаунты</string>
+    <string name="settings_acounts_add">Добавить аккаунт</string>
+    <string name="settings_categories_goods">Категории / Товары</string>
+    <string name="settings_stock">Склад</string>
 </resources>
